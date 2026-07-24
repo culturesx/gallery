@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galeri - Material Design</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500&family=Material+Symbols+Outlined" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+<!--
+  =====================================================================
+  SUMBER DATA GALERI (format JSON)
+  Struktur: { "albums": [ { id, name, color,
+                photos:[{ id, title, preview, original }] } ] }
+  - preview  : gambar kecil/terkompresi untuk grid album & thumbnail
+               (dimuat cepat, hemat bandwidth)
+  - original : gambar resolusi penuh, dipakai saat lightbox dibuka
+               (dimuat di belakang layar) dan saat tombol unduh ditekan
+  Untuk produksi nyata: pindahkan isi objek ini ke file terpisah
+  "albums.json" lalu load lewat fetch('./albums.json') di loadGalleryData().
+  =====================================================================
+-->
+
+<div class="app">
+
+  <nav class="nav-rail">
+    <button class="fab" aria-label="Tambah album">
+      <span class="msi">add</span>
+    </button>
+    <button class="rail-item active" data-view="albums">
+      <span class="pill"><span class="msi">folder</span></span>
+      Album
+    </button>
+  </nav>
+
+  <div class="main">
+    <div class="topbar">
+      <h1 id="page-title">Album</h1>
+      <div class="search">
+        <span class="msi">search</span>
+        <input id="search-input" type="text" placeholder="Cari album atau foto...">
+      </div>
+      <div class="avatar">12</div>
+    </div>
+
+    <div class="crumbs" id="crumbs"></div>
+
+    <div class="content">
+      <div id="view-root"></div>
+    </div>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <button class="close" onclick="closeLightbox()" aria-label="Tutup"><span class="msi">close</span></button>
+  <div class="counter" id="lightbox-counter"></div>
+  <div class="res-badge" id="res-badge"><span class="dot"></span><span id="res-badge-text">preview</span></div>
+
+  <div class="viewer" id="lightbox-viewer">
+    <img id="lightbox-img" src="" alt="">
+  </div>
+
+  <div class="info">
+    <div class="t" id="lightbox-title"></div>
+    <div id="lightbox-album"></div>
+  </div>
+
+  <div class="toolbar">
+    <button onclick="navLightbox(-1)" aria-label="Next"><span class="msi">chevron_left</span></button>
+    <button onclick="zoomBy(-0.25)" aria-label="Perkecil"><span class="msi">zoom_out</span></button>
+    <span class="zoom-level" id="zoom-level">100%</span>
+    <button onclick="zoomBy(0.25)" aria-label="Perbesar"><span class="msi">zoom_in</span></button>
+    <span class="sep"></span>
+    <button onclick="resetZoom()" aria-label="Reset zoom"><span class="msi">restart_alt</span></button>
+    <button onclick="downloadCurrent()" aria-label="Unduh foto"><span class="msi">download</span></button>
+    <button onclick="navLightbox(1)" aria-label="Next"><span class="msi">chevron_right</span></button>
+  </div>
+</div>
+
+<script src="./assets/js/app.js"></script>
+
+</body>
+</html>
